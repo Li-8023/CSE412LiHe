@@ -34,7 +34,11 @@ public class DatabaseConnection {
         String table_name = "customer";
         Statement statement;
         try {
-            customerId++;
+            int hash = 7;
+            for (int i = 0; i < customer.getFirstname().length(); i++) {
+                hash = hash*31 + customer.getFirstname().charAt(i);
+            }
+            customerId += hash;
             String query = String.format("insert into %s(user_id, username, first_name, last_name, password, email, address) " +
                     "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customerId, customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
