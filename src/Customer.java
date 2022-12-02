@@ -4,8 +4,10 @@ public class Customer {
     private String email;
     private String password;
     private String address;
+    private int customerId;
 
-    Customer(String firstname, String lastname, String email, String password, String address) {
+    Customer(int customerId, String firstname, String lastname, String email, String password, String address) {
+        this.customerId = customerId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -32,5 +34,7 @@ public class Customer {
     String getAddress() {
         return this.address;
     }
+
+    int getId() {return this.customerId;}
 
 }

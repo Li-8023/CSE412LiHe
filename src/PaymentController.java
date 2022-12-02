@@ -40,10 +40,11 @@ public class PaymentController {
 		addr = billingAddress.getText();
 		if(cardNum.trim().isEmpty() || addr.trim().isEmpty())
 		{
-			prompt.setText("One or more fileds is(are) empty.");
+			prompt.setText("One or more fields cannot be empty.");
 		}
 		else
 		{
+			// TODO: save the credit card number
 			prompt.setText("");
 			Parent root = FXMLLoader.load(getClass().getResource("ShoppingCart.fxml"));
 			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
