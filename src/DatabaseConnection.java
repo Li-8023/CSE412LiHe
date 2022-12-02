@@ -29,13 +29,14 @@ public class DatabaseConnection {
     /**
      * Inputs the customer login information into the Customer database
      */
+    private int customerId = 100;
     public void customerLogin(Connection conn, Customer customer) {
         String table_name = "customer";
         Statement statement;
         try {
-            // TODO: find out how to enumerate the customer id
-            String query = String.format("insert into %s(first_name, last_name, password, email, address) " +
-                    "values('%s','%s','%s','%s', '%s);",table_name, customer.getFirstname(), customer.getLastname(),
+            customerId++;
+            String query = String.format("insert into %s(customerId, first_name, last_name, first_name+last_name, password, email, address) " +
+                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
             statement = conn.createStatement();
             statement.executeUpdate(query);
