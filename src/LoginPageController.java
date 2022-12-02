@@ -9,6 +9,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 
 
@@ -33,9 +35,15 @@ public class LoginPageController{
     @FXML
     public void userLogIn(ActionEvent event) throws IOException 
     {
-            Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
-            Stage window = (Stage) logInButton.getScene().getWindow();
-            window.setScene(new Scene(root, 600, 400));
+        // check login
+        DatabaseConnection dbConnection = new DatabaseConnection();
+        Connection conn = dbConnection.getConnection();
+        dbConnection.checkLogin(conn);
+
+        // go to category page
+        Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
+        Stage window = (Stage) logInButton.getScene().getWindow();
+        window.setScene(new Scene(root, 600, 400));
 
 
     }

@@ -1,6 +1,8 @@
 public class Order {
     private String item;
+    private String firstname;
     private String lastname;
+    private String email;
     private int amount;
     private String password;
     private String address;
