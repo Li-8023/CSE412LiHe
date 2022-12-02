@@ -35,8 +35,8 @@ public class DatabaseConnection {
         Statement statement;
         try {
             customerId++;
-            String query = String.format("insert into %s(customerId, first_name, last_name, first_name+last_name, password, email, address) " +
-                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customer.getFirstname(), customer.getLastname(),
+            String query = String.format("insert into %s(user_id, username, first_name, last_name, password, email, address) " +
+                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customerId, customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
             statement = conn.createStatement();
             statement.executeUpdate(query);
