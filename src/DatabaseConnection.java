@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Set;
 
 public class DatabaseConnection {
     public Connection conn;
@@ -61,5 +63,20 @@ public class DatabaseConnection {
 ////        	String query = String format("insert into %d(cart_id, total_cost, product_id, quantity)" + 
 ////        			"values('%d', '%s', '%s', ")
 //        }
+    }
+
+    public void checkLogin(Connection conn) {
+        String table_name = "customer";
+        Statement statement;
+        try {
+            String query = String.format("select email, password from %s", table_name);
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            System.out.println("Information fetched");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }
 }
