@@ -44,6 +44,9 @@ public class CreateAccountViewController {
     private String customerPassConfirm;
     private String customerAddress;
 
+    // Customer ID
+    public int CUSTOMER_ID;
+
     @FXML
     public void customerViewStart(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("CreateAccount.fxml"));
@@ -79,7 +82,15 @@ public class CreateAccountViewController {
             System.out.println("Password match. Saving data."); // debug
 
             // create a new customer object
-            Customer cust = new Customer(customerFname, customerLname, customerEmail, customerPass, customerAddress);
+            int customerId = 100;
+            int hash = 7;
+            for (int i = 0; i < customerFname.length(); i++) {
+                hash = hash*31 + customerFname.charAt(i);
+            }
+            customerId += hash;
+            CUSTOMER_ID = customerId;
+
+            Customer cust = new Customer(customerId, customerFname, customerLname, customerEmail, customerPass, customerAddress);
             //store customer data in DB
             DatabaseConnection dbConnection = new DatabaseConnection();
             Connection conn = dbConnection.getConnection();

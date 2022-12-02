@@ -31,18 +31,12 @@ public class DatabaseConnection {
     /**
      * Inputs the customer login information into the Customer database
      */
-    private int customerId = 100;
     public void customerLogin(Connection conn, Customer customer) {
         String table_name = "customer";
         Statement statement;
         try {
-            int hash = 7;
-            for (int i = 0; i < customer.getFirstname().length(); i++) {
-                hash = hash*31 + customer.getFirstname().charAt(i);
-            }
-            customerId += hash;
             String query = String.format("insert into %s(user_id, username, first_name, last_name, password, email, address) " +
-                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customerId, customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
+                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customer.getId(), customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
             statement = conn.createStatement();
             statement.executeUpdate(query);
@@ -77,6 +71,36 @@ public class DatabaseConnection {
             System.out.println(e);
         }
 
+    }
+
+    /**
+     * This function saves customer's credit card number into the PAYMENT table
+     * A hash function will delegate its payment_id and map it with the customer's id on CUSPAY table
+     * @param conn
+     * @param customer that owns the credit card
+     */
+    public void saveCreditCard(Connection conn, Customer customer, String cardNumber) {
+        Statement statement;
+        try {
+            // hash function for generating payment_id
+            int pay_id = 150;
+            int hash = 7;
+            for (int i = 0; i < customer.getFirstname().length(); i++) {
+                hash = hash*31 + customer.getFirstname().charAt(i);
+            }
+            pay_id += hash;
+            String query1 = String.format("insert to payment(payment_id, amount, acctNumber) values('%d','%f','%s');",pay_id, 0, cardNumber);
+            statement = conn.createStatement();
+            statement.executeUpdate(query1);
+            System.out.println("Saved in PAYMENT table"); // logging
+
+            // map the customer id and payment id in CUSPAY
+            String query2 = String.format("insert to cuspay(user_id, payment_id) values('%d','%d');");
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 }
