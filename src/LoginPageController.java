@@ -10,10 +10,26 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class LoginPageController{
     public LoginPageController() {
+    }
+    Connection con;
+    PreparedStatement pst;
+    public void Connect(){
+        try{
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:porstgresql://localhost:5434", "postgres", "Hl011028");
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
     }
     @FXML
     private TextField username;
@@ -33,9 +49,35 @@ public class LoginPageController{
     @FXML
     public void userLogIn(ActionEvent event) throws IOException 
     {
-            Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
-            Stage window = (Stage) logInButton.getScene().getWindow();
-            window.setScene(new Scene(root, 600, 400));
+        String typeUsername = "Username: ";
+        String typePassword = "Password: ";
+        String name = username.getText().toString();
+        String inputPassword = password.getText().toString();
+        try{
+            pst = con.prepareStatement("SELECT * FROM Customer where username = ? password = ?");
+            pst.setString(1,name);
+            pst.setString(2,inputPassword);
+            ResultSet rs = pst.excuteQuery();
+            //boolean checkLogin = false;
+            if(rs.next()){
+                errorMsg.setText("Succsessful!");
+                Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
+                Stage window = (Stage) logInButton.getScene().getWindow();
+                window.setScene(new Scene(root, 600, 400));
+            }else if(username.getText().isEmpty() && password.getText().isEmpty()){
+                errorMsg.setText("Please enter your data.");
+            }else{
+                errorMsg.setText("Wrong username or password!");
+            }
+
+        }catch(SQLException ex){
+            System.out.println(e);
+        }
+        
+
+        Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
+        Stage window = (Stage) logInButton.getScene().getWindow();
+        window.setScene(new Scene(root, 600, 400));
 
 
     }
