@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.Connection;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +32,9 @@ public class PaymentController {
     @FXML
     private Text prompt;
     
+    @FXML
+    private Text saveText;
+    
     private String cardNum;
     private String addr;
 
@@ -54,5 +58,34 @@ public class PaymentController {
 		}
 		  
 	}
+	
+	public void saveSuccess(ActionEvent event) throws IOException
+	{
+		saveText.setText("You have successfully save the information!!!");
+	}
+	
+	public void copyShipAddr(ActionEvent event) throws IOException
+	{
+		if(copyShipAddr.isSelected())
+		{
+			//String query = "select address from customer where user_id = ?";
+			DatabaseConnection dbConnection = new DatabaseConnection();
+	        Connection conn = dbConnection.getConnection();
+	        String address = dbConnection.copyShip(conn);
+	        billingAddress.setText(address);
+	        System.out.println("Controller Address:" + address);
+	        System.out.println("Sucessfully copy the address");
+		}
+		else
+		{
+			System.out.println("No action");
+		}
+		
+	}
 
 }
+
+
+
+
+
