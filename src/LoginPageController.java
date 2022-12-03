@@ -7,10 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 
 
@@ -30,21 +29,44 @@ public class LoginPageController{
     private Button signupButton;
 
     @FXML
-    private Label errorMsg;
+    private Text errorMsg;
+
+    private String inputEmail;
+    private String inputPassword;
 
     @FXML
     public void userLogIn(ActionEvent event) throws IOException 
     {
-        // check login
+        inputEmail = username.getText();
+        inputPassword = password.getText();
         DatabaseConnection dbConnection = new DatabaseConnection();
         Connection conn = dbConnection.getConnection();
-        dbConnection.checkLogin(conn);
+        Boolean flag = dbConnection.checkLogin(conn,inputEmail,inputPassword);
 
-        // go to category page
-        Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
-        Stage window = (Stage) logInButton.getScene().getWindow();
-        window.setScene(new Scene(root, 600, 400));
-
+        if(flag == true)
+        {
+	        	  	Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
+		            Stage window = (Stage) logInButton.getScene().getWindow();
+		            window.setScene(new Scene(root, 600, 400));
+	         
+        }
+        else{
+        	if(inputEmail.isEmpty() || inputPassword.isEmpty())
+	          {
+		          if(inputEmail.isEmpty()){
+		              System.out.println("Please enter your E-mail.");
+		              errorMsg.setText("Please enter your E-mail.");
+		          }else{
+		              System.out.println("Please enter your password.");
+		              errorMsg.setText("Please enter your password.");
+		          }
+	          }
+	          else
+	          {
+	        	  errorMsg.setText("Wrong email or password!");
+	          }
+            
+        }
 
     }
     @FXML
