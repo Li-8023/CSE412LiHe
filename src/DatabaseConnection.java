@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class DatabaseConnection {
     public Connection conn;
+    private Customer mCustomer;
     public Connection getConnection() {
         String dbname = "CSE412";
         String user = "postgres";
@@ -32,6 +33,7 @@ public class DatabaseConnection {
      * Inputs the customer login information into the Customer database
      */
     public void customerLogin(Connection conn, Customer customer) {
+        mCustomer = customer;
         String table_name = "customer";
         Statement statement;
         try {
@@ -95,8 +97,10 @@ public class DatabaseConnection {
             System.out.println("Saved in PAYMENT table"); // logging
 
             // map the customer id and payment id in CUSPAY
-            String query2 = String.format("insert to cuspay(user_id, payment_id) values('%d','%d');");
-
+            String query2 = String.format("insert to cuspay(user_id, payment_id) values('%d','%d');", pay_id, mCustomer.getId());
+            statement = conn.createStatement();
+            statement.executeUpdate(query1);
+            System.out.println("Saved in CUSPAY table"); // logging
 
         } catch (Exception e) {
             System.out.println(e);
