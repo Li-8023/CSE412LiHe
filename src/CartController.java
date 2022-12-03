@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.text.*;
@@ -36,7 +37,7 @@ public class CartController implements Initializable{
 	public void displayQuantity(int finalQuantity)
 	{
 		String output = Integer.toString(finalQuantity);
-		this.FinalQuantity.setText(output +"Items");
+		this.FinalQuantity.setText(output +" Items");
 	}
 	@FXML
 	private Label FinalPrice;
@@ -95,23 +96,37 @@ public class CartController implements Initializable{
 
 		//CategoryController categoryCon = new CategoryController();
 		//set up the columns in the table
-		itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
-		quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
-		//itemPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("itemPrice"));
-		totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
-
+//		TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
+//		itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
+//		TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
+//		quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
+//		//itemPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("itemPrice"));
+//		TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
+//		totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
 		//load data
-		tableView.setItems(getItem());
-//		tableView.setItems(item);
 
+//		tableView = new TableView<>();
+//		tableView.setItems(getItem());
+////		tableView.setItems(item);
+//		tableView.getColumns().addAll(itemDetailsColumn,quantityColumn,totalPriceColumn);
+
+//		VBox vBox = new VBox();
+//		vBox.getChildren().addAll();
+//		Scene scene = new Scene(vBox);
+//		window.setScene(scene);
+//		window.show();
+
+//		Parent root = FXMLLoader.load(getClass().getResource("ShoppingCart.fxml"));
+//		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//		Scene scene = new Scene(root);
+//		stage.setScene(scene);
+//		stage.show();
 	}
 	
 	public ObservableList<item> getItem()
 	{
-//		ObservableList<item> item = FXCollections.observableArrayList();
-		item = FXCollections.observableArrayList();
-
-
+		ObservableList<item> item = FXCollections.observableArrayList();
+//		item = FXCollections.observableArrayList();
 		CategoryController categoryCon = new CategoryController();
 
 		item.add(new item("Blouse", categoryCon.getBlouseQuantity(),4.5));

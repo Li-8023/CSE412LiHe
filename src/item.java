@@ -4,7 +4,10 @@ public class item {
 	private int quantity;
 //	private double itemPrice;
 	private double totalPrice;
-	
+
+	public item() {
+	}
+
 	public item(String itemDetails, int quantity, double totalPrice)
 	{
 		this.itemDetails = itemDetails;

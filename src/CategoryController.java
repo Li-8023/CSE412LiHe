@@ -13,9 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
@@ -79,17 +78,18 @@ public class CategoryController implements Initializable{
     private TextField suitNum;
     
     private int blouse;
-    private int coat;
-    private int dress;
-    private int dungarees;
-    private int pajama;
-    private int suit;
+    private int coat = 0;
+    private int dress = 0;
+    private int dungarees = 0;
+    private int pajama = 0;
+    private int suit = 0;
     private item item;
     private LinkedList<item> itemList;
     private ObservableList<item> data;
     //int blouse = 0;
     public void setBlouseQuantity(ActionEvent event)
     {
+
        blouse = Integer.parseInt(blouseNum.getText());
 //       item = new item("Blouse", blouse, 15.0, 4.5);
 //       itemList.add(item);
@@ -119,6 +119,8 @@ public class CategoryController implements Initializable{
     //int pajama;
     public void setPajamaQuantity(ActionEvent event)
     {
+//        item item1 = new item();
+//        item1.setItemDetails();
     	pajama = Integer.parseInt(pajamaNum.getText());
     	
     }
@@ -195,11 +197,20 @@ public class CategoryController implements Initializable{
         int dungareesQuantity = Integer.valueOf(dungareesNumText);
         int pajamaQuantity = Integer.valueOf(pajamaNumText);
         int suitQuantity = Integer.valueOf(suitNumText);
-
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShoppingCart.fxml"));
         root = loader.load();
         CartController cartController = loader.getController();
+
+        TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
+        itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
+        TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
+        //itemPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("itemPrice"));
+        TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
+        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
+
+
         //display quantity
         int finalQuantity =  blouseQuantity+coatQuantity+dressQuantity+dungareesQuantity+pajamaQuantity+suitQuantity;
         double blouseTotalPrice = blouseQuantity*15.0;
