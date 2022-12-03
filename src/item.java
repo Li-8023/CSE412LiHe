@@ -2,7 +2,7 @@
 public class item {
 	private String itemDetails;
 	private int quantity;
-	private double itemPrice;
+//	private double itemPrice;
 	private double totalPrice;
 	
 	public item(String itemDetails, int quantity, double totalPrice)

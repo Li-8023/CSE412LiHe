@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 public class CategoryController implements Initializable{
 	
@@ -24,7 +25,32 @@ public class CategoryController implements Initializable{
 //	{
 //		
 //	}
-	@FXML
+    //send data
+
+    @FXML
+//    private void sendData(MouseEvent event) {
+//        // Step 1
+//        Order order1 = new Order();
+//        // Step 2
+//        Node node = (Node) event.getSource();
+//        // Step 3
+//        Stage stage = (Stage) node.getScene().getWindow();
+//        stage.close();
+//        try {
+//            // Step 4
+//            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ShoppingCart.fxml"));
+//            // Step 5
+//            stage.setUserData(order1);// data java.class
+//            // Step 6
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            // Step 7
+//            stage.show();
+//        } catch (IOException e) {
+//            System.err.println(String.format("Error: %s", e.getMessage()));
+//        }
+//    }
+//	@FXML
     private Label blousePrice;
     @FXML
     private TextField blouseNum;
@@ -60,6 +86,7 @@ public class CategoryController implements Initializable{
     private int suit;
     private item item;
     private LinkedList<item> itemList;
+    private ObservableList<item> data;
     //int blouse = 0;
     public void setBlouseQuantity(ActionEvent event)
     {
@@ -67,7 +94,7 @@ public class CategoryController implements Initializable{
 //       item = new item("Blouse", blouse, 15.0, 4.5);
 //       itemList.add(item);
        System.out.print(blouse);
-       
+
     }
     
     //int coat;
@@ -155,8 +182,34 @@ public class CategoryController implements Initializable{
 //		window.setScene(tableViewScene);
 //		window.show();
 //		//原本代码
-		
-		  Parent root = FXMLLoader.load(getClass().getResource("ShoppingCart.fxml"));
+		//parsing info
+        String blouseNumText = blouseNum.getText();
+        String coatNumText = coatNum.getText();
+        String dressNumText = dressNum.getText();
+        String dungareesNumText = dungareesNum.getText();
+        String pajamaNumText = pajamaNum.getText(); //test for pajama
+        String suitNumText = suitNum.getText();
+        int blouseQuantity = Integer.valueOf(blouseNumText);
+        int coatQuantity = Integer.valueOf(coatNumText);
+        int dressQuantity = Integer.valueOf(dressNumText);
+        int dungareesQuantity = Integer.valueOf(dungareesNumText);
+        int pajamaQuantity = Integer.valueOf(pajamaNumText);
+        int suitQuantity = Integer.valueOf(suitNumText);
+
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShoppingCart.fxml"));
+        root = loader.load();
+        CartController cartController = loader.getController();
+        //display quantity
+        int finalQuantity =  blouseQuantity+coatQuantity+dressQuantity+dungareesQuantity+pajamaQuantity+suitQuantity;
+        double blouseTotalPrice = blouseQuantity*15.0;
+
+
+        double finalPrice =  blouseQuantity*15.0+coatQuantity*30.0+dressQuantity*25.0+dungareesQuantity*30.0+pajamaQuantity*20.0+suitQuantity*50.0;
+        cartController.displayQuantity(finalQuantity);
+        cartController.displayPrice(finalPrice);
+//        cartController.getItem(cartController);
+
 		  Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		  Scene scene = new Scene(root);
 		  stage.setScene(scene);
