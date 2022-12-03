@@ -79,16 +79,16 @@ public class DatabaseConnection {
      * This function saves customer's credit card number into the PAYMENT table
      * A hash function will delegate its payment_id and map it with the customer's id on CUSPAY table
      * @param conn
-     * @param customer that owns the credit card
+     * @param cardNumber
      */
-    public void saveCreditCard(Connection conn, Customer customer, String cardNumber) {
+    public void saveCreditCard(Connection conn, String cardNumber) {
         Statement statement;
         try {
             // hash function for generating payment_id
             int pay_id = 150;
             int hash = 7;
-            for (int i = 0; i < customer.getFirstname().length(); i++) {
-                hash = hash*31 + customer.getFirstname().charAt(i);
+            for (int i = 0; i < mCustomer.getFirstname().length(); i++) {
+                hash = hash*31 + mCustomer.getFirstname().charAt(i);
             }
             pay_id += hash;
             String query1 = String.format("insert to payment(payment_id, amount, acctNumber) values('%d','%f','%s');",pay_id, 0, cardNumber);

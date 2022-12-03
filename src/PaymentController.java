@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.Connection;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import javax.xml.crypto.Data;
 
 public class PaymentController {
 	@FXML
@@ -44,7 +47,12 @@ public class PaymentController {
 		}
 		else
 		{
+
 			// TODO: save the credit card number
+			DatabaseConnection dbConnection = new DatabaseConnection();
+			Connection conn = dbConnection.getConnection();
+			dbConnection.saveCreditCard(conn, cardNum);
+
 			prompt.setText("");
 			Parent root = FXMLLoader.load(getClass().getResource("ShoppingCart.fxml"));
 			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
