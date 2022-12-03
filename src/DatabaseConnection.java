@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class DatabaseConnection {
     public Connection conn;
+    boolean checkUsernameAndPassword;
     public Connection getConnection() {
         String dbname = "CSE412";
         String user = "postgres";
@@ -31,12 +32,18 @@ public class DatabaseConnection {
     /**
      * Inputs the customer login information into the Customer database
      */
+    private int customerId = 100;
     public void customerLogin(Connection conn, Customer customer) {
         String table_name = "customer";
         Statement statement;
         try {
+            int hash = 7;
+            for (int i = 0; i < customer.getFirstname().length(); i++) {
+                hash = hash*31 + customer.getFirstname().charAt(i);
+            }
+            customerId += hash;
             String query = String.format("insert into %s(user_id, username, first_name, last_name, password, email, address) " +
-                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customer.getId(), customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
+                    "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customerId, customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
             statement = conn.createStatement();
             statement.executeUpdate(query);
@@ -49,58 +56,73 @@ public class DatabaseConnection {
     /**
      * Add a cart item into the cart_item database
      */
-    public void addItemToCart(Connection conn) {
+    public void addItemToCart(Connection conn)
+    {
         String table_name = "cart_item";
         Statement statement;
-//        try
-//        {
-////        	String query = String format("insert into %d(cart_id, total_cost, product_id, quantity)" + 
-////        			"values('%d', '%s', '%s', ")
-//        }
     }
-
-    public void checkLogin(Connection conn) {
+    public static int id;
+    public boolean checkLogin(Connection conn,String a, String b) {
         String table_name = "customer";
         Statement statement;
         try {
-            String query = String.format("select email, password from %s", table_name);
+            String query = String.format("select user_id, email, password from %s", table_name);
             statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+            	id  = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                
+                System.out.println(email + "," + password);
+                System.out.println("a" + a);
+                System.out.println("b" + b);
+                System.out.println("email" + email);
+                System.out.println("password"+ password);
+                System.out.println("Database login id: " + id);
+                if(email.equals(a) && password.equals(b)){
+                	System.out.println("match");
+                    return true;
+                }else{
+                	System.out.println("NO match");
+                    return false;
+                }
+            }
             System.out.println("Information fetched");
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        
+        return false;
     }
-
-    /**
-     * This function saves customer's credit card number into the PAYMENT table
-     * A hash function will delegate its payment_id and map it with the customer's id on CUSPAY table
-     * @param conn
-     * @param customer that owns the credit card
-     */
-    public void saveCreditCard(Connection conn, Customer customer, String cardNumber) {
-        Statement statement;
-        try {
-            // hash function for generating payment_id
-            int pay_id = 150;
-            int hash = 7;
-            for (int i = 0; i < customer.getFirstname().length(); i++) {
-                hash = hash*31 + customer.getFirstname().charAt(i);
-            }
-            pay_id += hash;
-            String query1 = String.format("insert to payment(payment_id, amount, acctNumber) values('%d','%f','%s');",pay_id, 0, cardNumber);
-            statement = conn.createStatement();
-            statement.executeUpdate(query1);
-            System.out.println("Saved in PAYMENT table"); // logging
-
-            // map the customer id and payment id in CUSPAY
-            String query2 = String.format("insert to cuspay(user_id, payment_id) values('%d','%d');");
-
-
-        } catch (Exception e) {
-            System.out.println(e);
+    
+  public String copyShip(Connection conn)
+  {
+  	String table_name = "customer";
+  	Statement statement;
+  	String address = "";
+  	try
+  	{
+  		System.out.println("copy address user id: " + id);
+  		String query = String.format("select address from %s where user_id = %d", table_name, id);
+  		statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        
+        while (rs.next()) {
+            address = rs.getString("address");
+            System.out.println("Database Address:" + address);
+            return address;
         }
-
-    }
+  		System.out.println("Successful copy shipping address to billing address");
+  		System.out.println("Database id:" + id);
+  		
+  	}catch(Exception e)
+  	{
+  		System.out.println(e);
+  	}
+  	return address;
+  }
 }
+
+   
+//}
