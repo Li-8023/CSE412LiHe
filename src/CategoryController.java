@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import jdk.jfr.Category;
 
 public class CategoryController implements Initializable{
 	
@@ -61,6 +62,25 @@ public class CategoryController implements Initializable{
     private item item;
     private LinkedList<item> itemList;
     //int blouse = 0;
+    public int CUSTOMER_ID;
+
+    /**
+     * Constructor for category controller, this one SHOULD be used
+     * @param CUSTOMER_ID
+     */
+    CategoryController(int CUSTOMER_ID) {
+        this.CUSTOMER_ID = CUSTOMER_ID;
+    }
+
+    /**
+     * Default constructor
+     */
+    CategoryController() {
+        CreateAccountViewController createAccountView = new CreateAccountViewController();
+        this.CUSTOMER_ID = createAccountView.CUSTOMER_ID;
+        System.out.println("CUSTOMER_ID : "+CUSTOMER_ID); // debug
+    }
+
     public void setBlouseQuantity(ActionEvent event)
     {
        blouse = Integer.parseInt(blouseNum.getText());
