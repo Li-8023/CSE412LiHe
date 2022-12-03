@@ -32,10 +32,11 @@
                </font>
             </Label>
             <TextField fx:id="cardNumber" layoutX="-22.0" layoutY="56.0" prefHeight="25.0" prefWidth="216.0" promptText="Please enter your card number" />
-            <CheckBox fx:id="copyShipAddr" layoutX="-16.0" layoutY="213.0" mnemonicParsing="false" text="Same as shipping address" />
+            <CheckBox fx:id="copyShipAddr" layoutX="-16.0" layoutY="213.0" mnemonicParsing="false" onAction="#copyShipAddr" text="Same as shipping address" />
             <CheckBox fx:id="saveCardNum" layoutX="-16.0" layoutY="87.0" mnemonicParsing="false" text="Save for future use" />
-            <Button fx:id="saveInfo" layoutX="-16.0" layoutY="349.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="saveInfo" layoutX="-16.0" layoutY="349.0" mnemonicParsing="false" onAction="#saveSuccess" text="Save" />
             <Text fx:id="prompt" fill="#e40d0d" layoutX="42.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="saveText" fill="#ef0606" layoutX="-7.0" layoutY="330.0" onDragDetected="#saveSuccess" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="408.0" fitWidth="284.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
