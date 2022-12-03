@@ -38,9 +38,11 @@ public class LoginPageController{
     {
         inputEmail = username.getText();
         inputPassword = password.getText();
-        String databaseEmail = DatabaseConnection.myarray[1];
-        String databasepassword = DatabaseConnection.myarray[2];
-        if(inputEmail == databaseEmail && inputPassword == databaseEmail){
+        DatabaseConnection dbConnection = new DatabaseConnection();
+        Connection conn = dbConnection.getConnection();
+        dbConnection.checkLogin(conn,inputEmail,inputPassword);
+
+        if(dbConnection.checkLogin(conn,inputEmail,inputPassword) = true){
             Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
             Stage window = (Stage) logInButton.getScene().getWindow();
             window.setScene(new Scene(root, 600, 400));

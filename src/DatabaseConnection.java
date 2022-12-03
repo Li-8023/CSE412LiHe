@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class DatabaseConnection {
     public Connection conn;
-    public String[] myarray = new String[10];//String array declaration with size
+    boolean checkUsernameAndPassword;
     public Connection getConnection() {
         String dbname = "CSE412";
         String user = "postgres";
@@ -66,7 +66,7 @@ public class DatabaseConnection {
 //        }
     }
 
-    public void checkLogin(Connection conn) {
+    public boolean checkLogin(Connection conn,String a, String b) {
         String table_name = "customer";
         Statement statement;
         try {
@@ -77,10 +77,13 @@ public class DatabaseConnection {
                 String id  = rs.getString("user_id");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                myarray[0]= id;
-                myarray[1]= email;
-                myarray[2]= password;
+                
                 System.out.println(email + "," + password);
+                if(email == a && password == b){
+                    return true;
+                }else{
+                    return false;
+                }
             }
             System.out.println("Information fetched");
         } catch (Exception e) {
