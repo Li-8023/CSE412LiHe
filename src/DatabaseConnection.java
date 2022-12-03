@@ -7,10 +7,19 @@ import java.util.Set;
 public class DatabaseConnection {
     public Connection conn;
     boolean checkUsernameAndPassword;
+    public static int CUSTOMER_ID;
+    String COMP_USER; // use this to specify who is the user, only for testing purposes
     public Connection getConnection() {
+        //COMP_USER = "adeline";
         String dbname = "CSE412";
         String user = "postgres";
         String password = "Hl011028";
+
+        if(COMP_USER.equals("adeline")) {
+            System.out.println("user: " +user);
+            dbname = "CSE412Project";
+            password = "cse412db";
+        }
         String url = "jdbc:postgresql://localhost:5432/";
 
         try {
@@ -42,6 +51,7 @@ public class DatabaseConnection {
                 hash = hash*31 + customer.getFirstname().charAt(i);
             }
             customerId += hash;
+            CUSTOMER_ID = customerId; // set the global variable CUSTOMER_ID to the customerId that we just created
             String query = String.format("insert into %s(user_id, username, first_name, last_name, password, email, address) " +
                     "values('%d','%s','%s','%s','%s','%s','%s');",table_name, customerId, customer.getFirstname()+customer.getLastname(), customer.getFirstname(), customer.getLastname(),
                     customer.getPassword(), customer.getEmail(), customer.getAddress());
@@ -61,7 +71,7 @@ public class DatabaseConnection {
         String table_name = "cart_item";
         Statement statement;
     }
-    public static int id;
+
     public boolean checkLogin(Connection conn,String a, String b) {
         String table_name = "customer";
         Statement statement;
@@ -70,7 +80,7 @@ public class DatabaseConnection {
             statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-            	id  = rs.getInt("user_id");
+            	CUSTOMER_ID  = rs.getInt("user_id");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 
@@ -79,7 +89,7 @@ public class DatabaseConnection {
                 System.out.println("b" + b);
                 System.out.println("email" + email);
                 System.out.println("password"+ password);
-                System.out.println("Database login id: " + id);
+                System.out.println("Database login ID: " + CUSTOMER_ID);
                 if(email.equals(a) && password.equals(b)){
                 	System.out.println("match");
                     return true;
@@ -103,8 +113,8 @@ public class DatabaseConnection {
   	String address = "";
   	try
   	{
-  		System.out.println("copy address user id: " + id);
-  		String query = String.format("select address from %s where user_id = %d", table_name, id);
+  		System.out.println("copy address user id: " + CUSTOMER_ID);
+  		String query = String.format("select address from %s where user_id = %d", table_name, CUSTOMER_ID);
   		statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
         
@@ -114,7 +124,7 @@ public class DatabaseConnection {
             return address;
         }
   		System.out.println("Successful copy shipping address to billing address");
-  		System.out.println("Database id:" + id);
+  		System.out.println("Database id:" + CUSTOMER_ID);
   		
   	}catch(Exception e)
   	{
