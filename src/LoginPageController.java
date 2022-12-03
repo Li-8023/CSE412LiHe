@@ -16,7 +16,7 @@ public class LoginPageController{
     public LoginPageController() {
     }
     @FXML
-    private TextField username;
+    private java.awt.TextField username;
 
     @FXML
     private PasswordField password;
@@ -30,13 +30,32 @@ public class LoginPageController{
     @FXML
     private Label errorMsg;
 
+    private String inputEmail;
+    private String inputPassword;
+
     @FXML
     public void userLogIn(ActionEvent event) throws IOException 
     {
+        inputEmail = username.getText();
+        inputPassword = password.getText();
+        String databaseEmail = DatabaseConnection.myarray[1];
+        String databasepassword = DatabaseConnection.myarray[2];
+        if(inputEmail == databaseEmail && inputPassword == databaseEmail){
             Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
             Stage window = (Stage) logInButton.getScene().getWindow();
             window.setScene(new Scene(root, 600, 400));
 
+        }else if(inputEmail.trim().isEmpty() || inputPassword.trim().isEmpty()){
+            if(inputEmail.trim().isEmpty()){
+                System.out.println("Please enter your E-mail.");
+                errorMsg.setText("Please enter your E-mail.");
+            }else{
+                System.out.println("Please enter your password.");
+                errorMsg.setText("Please enter your password.");
+            }
+        }else{
+            errorMsg.setText("Wrong email or password!");
+        }
 
     }
     @FXML

@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 
 import java.awt.*;
 import java.io.IOException;
+import java.sql.Connection;
 
 public class CreateAccountViewController {
 
@@ -33,12 +34,15 @@ public class CreateAccountViewController {
     public Label passLbl;
     @FXML
     public Label emptyLbl;
+    @FXML
+    public TextField addressTxtFld;
 
     private String customerFname;
     private String customerLname;
     private String customerEmail;
     private String customerPass;
     private String customerPassConfirm;
+    private String customerAddress;
 
     @FXML
     public void customerViewStart(Stage stage) throws IOException {
@@ -58,9 +62,10 @@ public class CreateAccountViewController {
         customerEmail = emailTxtFld.getText();
         customerPass = passTxtFld.getText();
         customerPassConfirm = confirmPassTxtFld.getText();
+        customerAddress = addressTxtFld.getText();
 
-        // check for fname, lname, email input
-        if(customerFname.trim().isEmpty() || customerLname.trim().isEmpty() || customerEmail.trim().isEmpty() || customerPass.isEmpty()) {
+        // check for fname, lname, email, address input
+        if(customerFname.trim().isEmpty() || customerLname.trim().isEmpty() || customerEmail.trim().isEmpty() || customerPass.isEmpty() || customerAddress.isEmpty()) {
             emptyLbl.setText("One or more fields cannot be empty.");
         } else {
             emptyLbl.setText("");
@@ -72,12 +77,15 @@ public class CreateAccountViewController {
         } else {
             passLbl.setText("");
             System.out.println("Password match. Saving data."); // debug
-            // TODO: store customer data in DB
-            // TODO: go to category page
-            
+
+            // create a new customer object
+            Customer cust = new Customer(customerFname, customerLname, customerEmail, customerPass, customerAddress);
+            //store customer data in DB
             DatabaseConnection dbConnection = new DatabaseConnection();
-            dbConnection.getConnection();
-            
+            Connection conn = dbConnection.getConnection();
+            dbConnection.customerLogin(conn, cust);
+
+            // go to CATEGORY page
             Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
