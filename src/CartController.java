@@ -22,11 +22,12 @@ import javafx.scene.text.*;
 
 public class CartController implements Initializable{
 	public CartController() {
-		this.item = item;
+//		this.tableView = tableView;
 	}
 
-	@FXML private TableView<item> tableView;
-	@FXML private ObservableList<item> item;
+	@FXML
+	public TableView<item> tableView;
+	@FXML private ObservableList<item> item = FXCollections.observableArrayList();
     @FXML private TableColumn<item, String> itemDetailsColumn;
     @FXML private TableColumn<item, Integer> quantityColumn;
     //@FXML private TableColumn<item, Double> itemPriceColumn;
@@ -46,50 +47,9 @@ public class CartController implements Initializable{
 		String output = Double.toString(finalPrice);
 		this.FinalPrice.setText("Total："+ output);
 	}
-    private item itemInfo1;
 
     //parsing information
-	private Order order;
-	// send data
-//	@FXML
-//	private void sendData(MouseEvent event) {
-//		// Step 1
-//		Order order1 = new Order();
-//		// Step 2
-//		Node node = (Node) event.getSource();
-//		// Step 3
-//		Stage stage = (Stage) node.getScene().getWindow();
-//		stage.close();
-//		try {
-//			// Step 4
-//			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SceneA.fxml"));
-//			// Step 5
-//			stage.setUserData(u);
-//			// Step 6
-//			Scene scene = new Scene(root);
-//			stage.setScene(scene);
-//			// Step 7
-//			stage.show();
-//		} catch (IOException e) {
-//			System.err.println(String.format("Error: %s", e.getMessage()));
-//		}
-//	}
-	// receive data
-//	@FXML
-//	private void receiveData() {
-//		// Step 1
-//		Node node = (Node) event.getSource();
-//		Stage stage = (Stage) node.getScene().getWindow();
-//		// Step 2
-//		Order order1 = (Order) stage.getUserData();
-//		// Step 3
-//		double totalPrice = order1.getTotalPrice();
-//		int quantity = order1.getQuantity();
-//
-//	}
 
-
-    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -97,49 +57,39 @@ public class CartController implements Initializable{
 		//CategoryController categoryCon = new CategoryController();
 		//set up the columns in the table
 //		TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
-//		itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
+		itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
 //		TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
-//		quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
-//		//itemPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("itemPrice"));
+		quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
 //		TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
-//		totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
-		//load data
-
-//		tableView = new TableView<>();
-//		tableView.setItems(getItem());
-////		tableView.setItems(item);
-//		tableView.getColumns().addAll(itemDetailsColumn,quantityColumn,totalPriceColumn);
-
-//		VBox vBox = new VBox();
-//		vBox.getChildren().addAll();
-//		Scene scene = new Scene(vBox);
-//		window.setScene(scene);
-//		window.show();
-
-//		Parent root = FXMLLoader.load(getClass().getResource("ShoppingCart.fxml"));
-//		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		Scene scene = new Scene(root);
-//		stage.setScene(scene);
-//		stage.show();
+		totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
+		tableView.getColumns().addAll(itemDetailsColumn,quantityColumn,totalPriceColumn);
+//
 	}
 	
-	public ObservableList<item> getItem()
-	{
-		ObservableList<item> item = FXCollections.observableArrayList();
+//	public ObservableList<item> getItem()
+//	{
+////		ObservableList<item> item = FXCollections.observableArrayList();
+////		item = FXCollections.observableArrayList();
+////		CategoryController categoryCon = new CategoryController();
+//		item.add(new item("Blouse", 0,4.5));
+//		item.add(new item("Coat", 0,  4.5));
+//		item.add(new item("Dress", 0,  4.5));
+//		item.add(new item("Dungarees",0,  4.5));
+//		item.add(new item("Pajama", 0,  4.5));
+//		item.add(new item("Suit", 0,  4.5));
+//
 //		item = FXCollections.observableArrayList();
-		CategoryController categoryCon = new CategoryController();
-
-		item.add(new item("Blouse", categoryCon.getBlouseQuantity(),4.5));
-		item.add(new item("Coat", categoryCon.getCoatQuantity(),  4.5));
-		item.add(new item("Dress", categoryCon.getDressQuantity(),  4.5));
-		item.add(new item("Dungarees", categoryCon.getDungareesQuantity(),  4.5));
-		item.add(new item("Pajama", categoryCon.getPajamaQuantity(),  4.5));
-		item.add(new item("Suit", categoryCon.getSuitQuantity(),  4.5));
-		
-		//System.out.print("I am here" + categoryCon.getBlouseQuantity());
-		
-		return item;	
-	}
+//		//CategoryController categoryCon = new CategoryController();
+//
+////		item.add(new item("Blouse",  blouseQuantity , blouseTotalPrice));
+////		item.add(new item("Coat",  coatQuantity, coatTotalPrice));
+////		item.add(new item("Dress", dressQuantity, dressTotalPrice ));
+////		item.add(new item("Dungarees", dungareesQuantity, dungareesTotalPrice));
+////		item.add(new item("Pajama", pajamaQuantity, pajamaTotalPrice));
+////		item.add(new item("Suit", suitQuantity, suitTotalPrice ));
+//		//System.out.print("I am here" + categoryCon.getBlouseQuantity());
+//		return item;
+//	}
 	public void switchToCategory(ActionEvent event) throws IOException
 	{
 		  Parent root = FXMLLoader.load(getClass().getResource("Category.fxml"));

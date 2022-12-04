@@ -20,36 +20,13 @@ import javafx.scene.text.Text;
 
 public class CategoryController implements Initializable{
 	
-//	public CategoryController(int blouse, int coat, int dress, int dungarees, int pajama, int suit) 
-//	{
-//		
-//	}
+	public CategoryController()
+	{
+
+	}
     //send data
 
     @FXML
-//    private void sendData(MouseEvent event) {
-//        // Step 1
-//        Order order1 = new Order();
-//        // Step 2
-//        Node node = (Node) event.getSource();
-//        // Step 3
-//        Stage stage = (Stage) node.getScene().getWindow();
-//        stage.close();
-//        try {
-//            // Step 4
-//            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ShoppingCart.fxml"));
-//            // Step 5
-//            stage.setUserData(order1);// data java.class
-//            // Step 6
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            // Step 7
-//            stage.show();
-//        } catch (IOException e) {
-//            System.err.println(String.format("Error: %s", e.getMessage()));
-//        }
-//    }
-//	@FXML
     private Label blousePrice;
     @FXML
     private TextField blouseNum;
@@ -84,35 +61,37 @@ public class CategoryController implements Initializable{
     private int pajama = 0;
     private int suit = 0;
     private item item;
-    private LinkedList<item> itemList;
-    private ObservableList<item> data;
+//    private LinkedList<item> itemList;
+    private ObservableList<item> items;
     //int blouse = 0;
     public void setBlouseQuantity(ActionEvent event)
     {
-
-       blouse = Integer.parseInt(blouseNum.getText());
-//       item = new item("Blouse", blouse, 15.0, 4.5);
+        blouse = 0;
+        blouse = Integer.parseInt(blouseNum.getText());
 //       itemList.add(item);
-       System.out.print(blouse);
+//       System.out.print(blouse);
 
     }
     
     //int coat;
     public void setCoatQuantity(ActionEvent event)
     {
-    	coat = Integer.parseInt(coatNum.getText());
+        coat = 0;
+        coat = Integer.parseInt(coatNum.getText());
     }
     
 
     //int dress;
     public void setDressQuantity(ActionEvent event)
     {
-    	dress = Integer.parseInt(dressNum.getText());
+    	dress = 0;
+        dress = Integer.parseInt(dressNum.getText());
     }
     //int dungarees;
     public void setDungareesQuantity(ActionEvent event)
     {
-    	dungarees = Integer.parseInt(dungareesNum.getText());
+    	dungarees = 0;
+        dungarees = Integer.parseInt(dungareesNum.getText());
     }
     
     
@@ -121,6 +100,7 @@ public class CategoryController implements Initializable{
     {
 //        item item1 = new item();
 //        item1.setItemDetails();
+        pajama = 0;
     	pajama = Integer.parseInt(pajamaNum.getText());
     	
     }
@@ -128,12 +108,13 @@ public class CategoryController implements Initializable{
     //int suit;
     public void setSuitQuantity(ActionEvent event)
     {
-    	suit = Integer.parseInt(suitNum.getText());
+    	suit = 0;
+        suit = Integer.valueOf(suitNum.getText());
     }
 	
 	public int getBlouseQuantity()
 	{
-		System.out.print("Quantity:" + blouse);
+//		System.out.print("Quantity:" + blouse);
 		return blouse;
 	}
 	public int getCoatQuantity()
@@ -168,22 +149,8 @@ public class CategoryController implements Initializable{
 //		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 //		window.setScene(tableViewScene);
 //		window.show();
-		
 		//CartController controller = FXMLLoader.getController();
-		
-//		//原本代码
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(getClass().getResource("ShoppingCart.fxml"));
-//		Parent tableViewParent = loader.load();
-//		Scene tableViewScene = new Scene(tableViewParent);
-//		
-//		CartController controller = loader.getController();
-//		controller.getItem();
-//		
-//		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		window.setScene(tableViewScene);
-//		window.show();
-//		//原本代码
+
 		//parsing info
         String blouseNumText = blouseNum.getText();
         String coatNumText = coatNum.getText();
@@ -197,30 +164,47 @@ public class CategoryController implements Initializable{
         int dungareesQuantity = Integer.valueOf(dungareesNumText);
         int pajamaQuantity = Integer.valueOf(pajamaNumText);
         int suitQuantity = Integer.valueOf(suitNumText);
+
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShoppingCart.fxml"));
         root = loader.load();
         CartController cartController = loader.getController();
+        //table view
+        //add one item
+//        item item1 = new item();
+//        item1.setItemDetails(blouseNum.getText());
+//        item1.setQuantity(Integer.parseInt(blouseNum.getText()));
+//        item1 = new item("Blouse", , 4.5);)
+//        cartController.tableView.getItems().add(item1);
 
-        TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
-        itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
-        TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
-        //itemPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("itemPrice"));
-        TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
-
+//        TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
+//        itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
+//        TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
+//        quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
+//        TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
+//        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
+//        TableColumn<item, String> itemDetailsColumn = new TableColumn<>("itemDetails");
+//        itemDetailsColumn.setCellValueFactory(new PropertyValueFactory<item, String>("itemDetails"));
+//        TableColumn<item, Integer> quantityColumn = new TableColumn<>("quantity");
+//        quantityColumn.setCellValueFactory(new PropertyValueFactory<item, Integer>("quantity"));
+//        TableColumn<item, Double> totalPriceColumn = new TableColumn<>("totalPrice");
+//        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<item, Double>("totalPrice"));
+//        cartController.tableView.getColumns().addAll(itemDetailsColumn,quantityColumn,totalPriceColumn);
+        cartController.tableView.setItems(getItem());
 
         //display quantity
         int finalQuantity =  blouseQuantity+coatQuantity+dressQuantity+dungareesQuantity+pajamaQuantity+suitQuantity;
         double blouseTotalPrice = blouseQuantity*15.0;
-
+        double coatTotalPrice = coatQuantity*30.0;
+        double dressTotalPrice = dressQuantity*25.0;
+        double dungareesTotalPrice = dungareesQuantity*30.0;
+        double pajamaTotalPrice = pajamaQuantity*20.0;
+        double suitTotalPrice = suitQuantity*50.0;
 
         double finalPrice =  blouseQuantity*15.0+coatQuantity*30.0+dressQuantity*25.0+dungareesQuantity*30.0+pajamaQuantity*20.0+suitQuantity*50.0;
         cartController.displayQuantity(finalQuantity);
         cartController.displayPrice(finalPrice);
-//        cartController.getItem(cartController);
-
+//        cartController.getItem();
 		  Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		  Scene scene = new Scene(root);
 		  stage.setScene(scene);
@@ -233,19 +217,36 @@ public class CategoryController implements Initializable{
 		// TODO Auto-generated method stub
 		
 	}
-//	
-//	public ObservableList<item> getItem()
-//	{
-//		ObservableList<item> item = FXCollections.observableArrayList();
-//		//CategoryController categoryCon = new CategoryController();
-//		item.add(new item("Blouse", blouse, 15.00, 4.3));
-//		item.add(new item("Coat", coat, 30.00, 4.5));
-//		item.add(new item("Dress", dress, 25.00, 4.5));
-//		item.add(new item("Dungarees", dungarees, 30.00, 4.5));
-//		item.add(new item("Pajama", pajama, 20.00, 4.5));
-//		item.add(new item("Suit", suit, 50.00, 4.5));
-//		
-//		return item;	
-//	}
+
+	public ObservableList<item> getItem()
+	{
+        String blouseNumText = blouseNum.getText();
+        String coatNumText = coatNum.getText();
+        String dressNumText = dressNum.getText();
+        String dungareesNumText = dungareesNum.getText();
+        String pajamaNumText = pajamaNum.getText(); //test for pajama
+        String suitNumText = suitNum.getText();
+        int blouseQuantity = Integer.valueOf(blouseNumText);
+        int coatQuantity = Integer.valueOf(coatNumText);
+        int dressQuantity = Integer.valueOf(dressNumText);
+        int dungareesQuantity = Integer.valueOf(dungareesNumText);
+        int pajamaQuantity = Integer.valueOf(pajamaNumText);
+        int suitQuantity = Integer.valueOf(suitNumText);
+        double blouseTotalPrice = blouseQuantity*15.0;
+        double coatTotalPrice = coatQuantity*30.0;
+        double dressTotalPrice = dressQuantity*25.0;
+        double dungareesTotalPrice = dungareesQuantity*30.0;
+        double pajamaTotalPrice = pajamaQuantity*20.0;
+        double suitTotalPrice = suitQuantity*50.0;
+		items = FXCollections.observableArrayList();
+		//CategoryController categoryCon = new CategoryController();
+		items.add(new item("Blouse",  blouseQuantity , blouseTotalPrice));
+		items.add(new item("Coat",  coatQuantity, coatTotalPrice));
+		items.add(new item("Dress", dressQuantity, dressTotalPrice ));
+		items.add(new item("Dungarees", dungareesQuantity, dungareesTotalPrice));
+		items.add(new item("Pajama", pajamaQuantity, pajamaTotalPrice));
+		items.add(new item("Suit", suitQuantity, suitTotalPrice ));
+		return items;
+	}
 	
 }
