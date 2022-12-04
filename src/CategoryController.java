@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -61,47 +62,52 @@ public class CategoryController implements Initializable{
     private item item;
     private LinkedList<item> itemList;
     //int blouse = 0;
+
+    /**
+     * This is the actually the event handler for ADD TO CART button.
+     * but i'm too tired to change the name :)
+     * @param event
+     */
     public void setBlouseQuantity(ActionEvent event)
     {
-       blouse = Integer.parseInt(blouseNum.getText());
-//       item = new item("Blouse", blouse, 15.0, 4.5);
-//       itemList.add(item);
-       System.out.print(blouse);
+        DatabaseConnection dbConenction = new DatabaseConnection();
+        Connection conn = dbConenction.getConnection();
+
+        if(!blouseNum.getText().isEmpty()) {
+            blouse = Integer.parseInt(blouseNum.getText());
+            item blouse_item = new item("Blouse",blouse,blouse*15.0);
+            dbConenction.addItemToCart(conn, blouse_item);
+
+        }
+        if(!coatNum.getText().isEmpty()) {
+            coat = Integer.parseInt(coatNum.getText());
+            item coat_item = new item("Coat",coat,coat*30.0);
+            dbConenction.addItemToCart(conn, coat_item);
+        }
+        if(!dressNum.getText().isEmpty()) {
+            dress = Integer.parseInt(dressNum.getText());
+            item dress_item = new item("Dress",dress,dress*25.0);
+            dbConenction.addItemToCart(conn, dress_item);
+        }
+        if(!pajamaNum.getText().isEmpty()) {
+            pajama = Integer.parseInt(pajamaNum.getText());
+            item pajama_item = new item("Pajama",pajama,pajama*20.0);
+            dbConenction.addItemToCart(conn, pajama_item);
+        }
+        if(!suitNum.getText().isEmpty()) {
+            suit = Integer.parseInt(suitNum.getText());
+            item suit_item = new item("Suit",suit,suit*50.0);
+            dbConenction.addItemToCart(conn, suit_item);
+        }
+        if(!dungareesNum.getText().isEmpty()) {
+            dungarees = Integer.parseInt(dungareesNum.getText());
+            item dung_item = new item("Dungarees",dungarees,dungarees*30.0);
+            dbConenction.addItemToCart(conn, dung_item);
+        }
+
        
     }
-    
-    //int coat;
-    public void setCoatQuantity(ActionEvent event)
-    {
-    	coat = Integer.parseInt(coatNum.getText());
-    }
-    
 
-    //int dress;
-    public void setDressQuantity(ActionEvent event)
-    {
-    	dress = Integer.parseInt(dressNum.getText());
-    }
-    //int dungarees;
-    public void setDungareesQuantity(ActionEvent event)
-    {
-    	dungarees = Integer.parseInt(dungareesNum.getText());
-    }
-    
-    
-    //int pajama;
-    public void setPajamaQuantity(ActionEvent event)
-    {
-    	pajama = Integer.parseInt(pajamaNum.getText());
-    	
-    }
-    
-    //int suit;
-    public void setSuitQuantity(ActionEvent event)
-    {
-    	suit = Integer.parseInt(suitNum.getText());
-    }
-	
 	public int getBlouseQuantity()
 	{
 		System.out.print("Quantity:" + blouse);

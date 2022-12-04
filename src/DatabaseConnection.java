@@ -8,7 +8,7 @@ public class DatabaseConnection {
     public Connection conn;
     boolean checkUsernameAndPassword;
     public static int CUSTOMER_ID;
-    String COMP_USER; // use this to specify who is the user, only for testing purposes
+    String COMP_USER=""; // use this to specify who is the user, only for testing purposes
     public Connection getConnection() {
         //COMP_USER = "adeline";
         String dbname = "CSE412";
@@ -16,7 +16,7 @@ public class DatabaseConnection {
         String password = "Hl011028";
 
         if(COMP_USER.equals("adeline")) {
-            System.out.println("user: " +user);
+            //System.out.println("user: " +user);
             dbname = "CSE412Project";
             password = "cse412db";
         }
@@ -73,11 +73,11 @@ public class DatabaseConnection {
         // HINT: CART_ID IS EQUAL TO CUSTOMER_ID
         try {
             // add item to cart_item table
-            String query = String.format("insert to cart_item(cart_id, total_cost, product_id, quantity) " +
+            String query = String.format("insert into cart_item(cart_id, total_cost, product_id, quantity) " +
                     "values('%d','%f','%d','%d');", CUSTOMER_ID, mItem.getTotalPrice(), mItem.getProductId(), mItem.getQuantity());
             statement = conn.createStatement();
             statement.executeUpdate(query);
-            System.out.println("Item(s) added to cart"); // logging
+            System.out.println("Item(s) added to cart: "+mItem.getItemDetails()); // logging
         } catch (Exception e) {
             System.out.println(e);
         }
