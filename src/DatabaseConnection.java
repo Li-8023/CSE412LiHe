@@ -66,10 +66,21 @@ public class DatabaseConnection {
     /**
      * Add a cart item into the cart_item database
      */
-    public void addItemToCart(Connection conn)
+    public void addItemToCart(Connection conn, item mItem)
     {
         String table_name = "cart_item";
         Statement statement;
+        // HINT: CART_ID IS EQUAL TO CUSTOMER_ID
+        try {
+            // add item to cart_item table
+            String query = String.format("insert to cart_item(cart_id, total_cost, product_id, quantity) " +
+                    "values('%d','%f','%d','%d');", CUSTOMER_ID, mItem.getTotalPrice(), mItem.getProductId(), mItem.getQuantity());
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Item(s) added to cart"); // logging
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public boolean checkLogin(Connection conn,String a, String b) {
