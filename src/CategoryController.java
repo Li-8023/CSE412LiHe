@@ -66,8 +66,12 @@ public class CategoryController implements Initializable{
     //int blouse = 0;
     public void setBlouseQuantity(ActionEvent event)
     {
-        blouse = 0;
-        blouse = Integer.parseInt(blouseNum.getText());
+        if (blouseNum.getText().isEmpty()){
+            blouse =0;
+        }else {
+            blouse = Integer.parseInt(blouseNum.getText());
+        }
+
 //       itemList.add(item);
 //       System.out.print(blouse);
 
@@ -152,18 +156,89 @@ public class CategoryController implements Initializable{
 		//CartController controller = FXMLLoader.getController();
 
 		//parsing info
-        String blouseNumText = blouseNum.getText();
-        String coatNumText = coatNum.getText();
-        String dressNumText = dressNum.getText();
-        String dungareesNumText = dungareesNum.getText();
-        String pajamaNumText = pajamaNum.getText(); //test for pajama
-        String suitNumText = suitNum.getText();
-        int blouseQuantity = Integer.valueOf(blouseNumText);
-        int coatQuantity = Integer.valueOf(coatNumText);
-        int dressQuantity = Integer.valueOf(dressNumText);
-        int dungareesQuantity = Integer.valueOf(dungareesNumText);
-        int pajamaQuantity = Integer.valueOf(pajamaNumText);
-        int suitQuantity = Integer.valueOf(suitNumText);
+//        if (blouseNum.getText().isEmpty()){
+//            blouse =0;
+//            String blouseNumText = "0";
+//        }
+//        if (coatNum.getText().isEmpty()){
+//            coat =0;
+//            String coatNumText = "0";
+//        }
+//        if (dressNum.getText().isEmpty()){
+//            dress =0;
+//            String dressNumText = "0";
+//        }
+//        if (dungareesNum.getText().isEmpty()){
+//            dungarees =0;
+//            String dungareesNumText = "0";
+//        }
+//        if (suitNum.getText().isEmpty()) {
+//            suit = 0;
+//            String suitNumText = "0";
+//        }
+//
+//        String blouseNumText = blouseNum.getText();
+//        String coatNumText = coatNum.getText();
+//        String dressNumText = dressNum.getText();
+//        String dungareesNumText = dungareesNum.getText();
+//        String pajamaNumText = pajamaNum.getText(); //test for pajama
+//        String suitNumText = suitNum.getText();
+//        int blouseQuantity = Integer.valueOf(blouseNumText);
+//        int coatQuantity = Integer.valueOf(coatNumText);
+//        int dressQuantity = Integer.valueOf(dressNumText);
+//        int dungareesQuantity = Integer.valueOf(dungareesNumText);
+//        int pajamaQuantity = Integer.valueOf(pajamaNumText);
+//        int suitQuantity = Integer.valueOf(suitNumText);
+        int blouseQuantity = 0;
+        int coatQuantity =0;
+        int dressQuantity=0;
+        int dungareesQuantity=0;
+        int suitQuantity=0;
+        int pajamaQuantity =0;
+
+        if (!blouseNum.getText().isEmpty()){
+            String blouseNumText = blouseNum.getText();
+            blouseQuantity = Integer.valueOf(blouseNumText);
+            double blouseTotalPrice = blouseQuantity*15.0;
+            //items.add(new item("Blouse",  blouseQuantity , blouseTotalPrice));
+        }
+        if (!coatNum.getText().isEmpty()){
+            String coatNumText = coatNum.getText();
+            coatQuantity = Integer.valueOf(coatNumText);
+            double coatTotalPrice = coatQuantity*30.0;
+            //items.add(new item("Coat",  coatQuantity, coatTotalPrice));
+
+        }
+        if (!dressNum.getText().isEmpty()){
+            String dressNumText = dressNum.getText();
+            dressQuantity = Integer.valueOf(dressNumText);
+            double dressTotalPrice = dressQuantity*25.0;
+            //items.add(new item("Dress", dressQuantity, dressTotalPrice ));
+
+        }
+        if (!dungareesNum.getText().isEmpty()){
+            String dungareesNumText = dungareesNum.getText();
+            dungareesQuantity = Integer.valueOf(dungareesNumText);
+            double dungareesTotalPrice = dungareesQuantity*30.0;
+            //items.add(new item("Dungarees", dungareesQuantity, dungareesTotalPrice));
+
+        }
+        if (!suitNum.getText().isEmpty()) {
+            String suitNumText = suitNum.getText();
+            suitQuantity = Integer.valueOf(suitNumText);
+            double suitTotalPrice = suitQuantity*50.0;
+            //items.add(new item("Suit", suitQuantity, suitTotalPrice ));
+
+        }
+
+        if(!pajamaNum.getText().isEmpty()) {
+
+            String pajamaNumText = pajamaNum.getText(); //test for pajama
+            pajamaQuantity = Integer.valueOf(pajamaNumText);
+            double pajamaTotalPrice = pajamaQuantity * 20.0;
+            //CategoryController categoryCon = new CategoryController();
+            //items.add(new item("Pajama", pajamaQuantity, pajamaTotalPrice));
+        }
 
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShoppingCart.fxml"));
@@ -220,32 +295,52 @@ public class CategoryController implements Initializable{
 
 	public ObservableList<item> getItem()
 	{
-        String blouseNumText = blouseNum.getText();
-        String coatNumText = coatNum.getText();
-        String dressNumText = dressNum.getText();
-        String dungareesNumText = dungareesNum.getText();
-        String pajamaNumText = pajamaNum.getText(); //test for pajama
-        String suitNumText = suitNum.getText();
-        int blouseQuantity = Integer.valueOf(blouseNumText);
-        int coatQuantity = Integer.valueOf(coatNumText);
-        int dressQuantity = Integer.valueOf(dressNumText);
-        int dungareesQuantity = Integer.valueOf(dungareesNumText);
-        int pajamaQuantity = Integer.valueOf(pajamaNumText);
-        int suitQuantity = Integer.valueOf(suitNumText);
-        double blouseTotalPrice = blouseQuantity*15.0;
-        double coatTotalPrice = coatQuantity*30.0;
-        double dressTotalPrice = dressQuantity*25.0;
-        double dungareesTotalPrice = dungareesQuantity*30.0;
-        double pajamaTotalPrice = pajamaQuantity*20.0;
-        double suitTotalPrice = suitQuantity*50.0;
-		items = FXCollections.observableArrayList();
-		//CategoryController categoryCon = new CategoryController();
-		items.add(new item("Blouse",  blouseQuantity , blouseTotalPrice));
-		items.add(new item("Coat",  coatQuantity, coatTotalPrice));
-		items.add(new item("Dress", dressQuantity, dressTotalPrice ));
-		items.add(new item("Dungarees", dungareesQuantity, dungareesTotalPrice));
-		items.add(new item("Pajama", pajamaQuantity, pajamaTotalPrice));
-		items.add(new item("Suit", suitQuantity, suitTotalPrice ));
+        items = FXCollections.observableArrayList();
+
+        if (!blouseNum.getText().isEmpty()){
+            String blouseNumText = blouseNum.getText();
+            int blouseQuantity = Integer.valueOf(blouseNumText);
+            double blouseTotalPrice = blouseQuantity*15.0;
+            items.add(new item("Blouse",  blouseQuantity , blouseTotalPrice));
+        }
+        if (!coatNum.getText().isEmpty()){
+            String coatNumText = coatNum.getText();
+            int coatQuantity = Integer.valueOf(coatNumText);
+            double coatTotalPrice = coatQuantity*30.0;
+            items.add(new item("Coat",  coatQuantity, coatTotalPrice));
+
+        }
+        if (!dressNum.getText().isEmpty()){
+            String dressNumText = dressNum.getText();
+            int dressQuantity = Integer.valueOf(dressNumText);
+            double dressTotalPrice = dressQuantity*25.0;
+            items.add(new item("Dress", dressQuantity, dressTotalPrice ));
+
+        }
+        if (!dungareesNum.getText().isEmpty()){
+            String dungareesNumText = dungareesNum.getText();
+            int dungareesQuantity = Integer.valueOf(dungareesNumText);
+            double dungareesTotalPrice = dungareesQuantity*30.0;
+            items.add(new item("Dungarees", dungareesQuantity, dungareesTotalPrice));
+
+        }
+        if (!suitNum.getText().isEmpty()) {
+            String suitNumText = suitNum.getText();
+            int suitQuantity = Integer.valueOf(suitNumText);
+            double suitTotalPrice = suitQuantity*50.0;
+            items.add(new item("Suit", suitQuantity, suitTotalPrice ));
+
+        }
+
+        if(!pajamaNum.getText().isEmpty()) {
+
+            String pajamaNumText = pajamaNum.getText(); //test for pajama
+            int pajamaQuantity = Integer.valueOf(pajamaNumText);
+            double pajamaTotalPrice = pajamaQuantity * 20.0;
+            //CategoryController categoryCon = new CategoryController();
+            items.add(new item("Pajama", pajamaQuantity, pajamaTotalPrice));
+        }
+
 		return items;
 	}
 	
